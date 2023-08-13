@@ -1,0 +1,25 @@
+org: akaviles024
+app: aws-node
+service: aws-node
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  function1:
+    handler: index.handler
+    events:
+      - kafka:
+        accessConfigurations:
+          security:
+            protocol: SASL_PLAINTEXT
+          sasl:
+            mechanism: PLAIN
+            jaas:
+              config: org.apache.kafka.common.security.plain.PlainLoginModule required username="FCEQTDQO26S6JTDS" password="unpXvJlMMwin2J4tPi7I2ymyu5jqrcp1GpP/NSCQA4Tpd9In5fnsLwK9/VSQHnKz";
+          bootstrapServers: pkc-n98pk.us-west-2.aws.confluent.cloud:9092
+          topic: orders
+          batchSize: 1
+          startingPosition: LATEST
