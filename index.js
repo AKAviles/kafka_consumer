@@ -16,7 +16,7 @@ const consumer = kafka.consumer({ groupId: "order-consumption" });
 
 module.exports.handler = async (event) => {
   await consumer.connect();
-  await consumer.subscribe({ topic: "orders" });
+  await consumer.subscribe({ topics: ["orders"] });
   await consumer.run({
     eachMessage: async ({ topic, partition, message, heartbeat }) => {
       console.log({
