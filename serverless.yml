@@ -13,7 +13,6 @@ functions:
     handler: index.handler
     events:
       - kafka:
-        accessConfigurations:
           bootstrapServers: pkc-n98pk.us-west-2.aws.confluent.cloud:9092
           topic: orders
           batchSize: 1
