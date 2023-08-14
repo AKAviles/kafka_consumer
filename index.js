@@ -15,10 +15,8 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: "order-consumption" });
 
 module.exports.handler = async (event) => {
-  console.log("EVENT HAS HAPPENED!");
-  console.log("Event Info: " + JSON.stringify(event));
   await consumer.connect();
-  await consumer.subscribe({ topic: "orders", fromBeginning: true });
+  await consumer.subscribe({ topic: "orders" });
   await consumer.run({
     eachMessage: async ({ topic, partition, message, heartbeat }) => {
       console.log({
@@ -26,15 +24,5 @@ module.exports.handler = async (event) => {
       });
     },
   });
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Received Event: " + event,
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+  return { statusCode: 200 };
 };
