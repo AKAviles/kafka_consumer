@@ -14,6 +14,7 @@ functions:
     events:
       - kafka:
           accessConfigurations:
+            saslPlainAuth: arn:aws:secretsmanager:us-east-1:014920475271:secret:kafka/orders-M1JSqj
           bootstrapServers: pkc-n98pk.us-west-2.aws.confluent.cloud:9092
           topic: orders
           batchSize: 1
