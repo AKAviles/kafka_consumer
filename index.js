@@ -20,7 +20,7 @@ module.exports.handler = async (event) => {
   await consumer.connect();
   await consumer.subscribe({ topic: "orders", fromBeginning: true });
   await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
+    eachMessage: async ({ topic, partition, message, heartbeat }) => {
       console.log({
         value: message.value.toString(),
       });
