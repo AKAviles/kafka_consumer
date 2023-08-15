@@ -19,33 +19,12 @@ module.exports.handler = async (event) => {
   await consumer.connect();
   await consumer.subscribe({ topics: ["orders"] });
   await consumer.run({
-    eachBatchAutoResolve: true,
-    eachBatch: async ({
-      batch,
-      resolveOffset,
-      heartbeat,
-      commitOffsetsIfNecessary,
-      uncommittedOffsets,
-      isRunning,
-      isStale,
-      pause,
-    }) => {
-      for (let message of batch.messages) {
-        console.log({
-          topic: batch.topic,
-          partition: batch.partition,
-          highWatermark: batch.highWatermark,
-          message: {
-            offset: message.offset,
-            key: message.key.toString(),
-            value: message.value.toString(),
-            headers: message.headers,
-          },
-        });
-
-        resolveOffset(message.offset);
-        await heartbeat();
-      }
+    // eachBatch: async ({ batch }) => {
+    //   console.log(batch)
+    // },
+    eachMessage: async ({ topic, partition, message }) => {
+      const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
+      console.log(`- ${prefix} ${message.key}#${message.value}`);
     },
   });
   return { statusCode: 200 };
