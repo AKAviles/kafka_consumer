@@ -1,6 +1,9 @@
-const { Kafka } = require("kafkajs");
+const { Kafka, logLevel } = require("kafkajs");
+const PrettyConsoleLogger = require("./prettyConsoleLogger");
 
 const kafka = new Kafka({
+  logLevel: logLevel.INFO,
+  logCreator: PrettyConsoleLogger,
   clientId: "output-topic",
   brokers: ["pkc-n98pk.us-west-2.aws.confluent.cloud:9092"],
   ssl: true,
@@ -23,9 +26,23 @@ module.exports.handler = async (event) => {
     //   console.log(batch)
     // },
     eachMessage: async ({ topic, partition, message }) => {
-      const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
-      console.log(`- ${prefix} ${message.key}#${message.value}`);
+      msgNumber++;
+      kafka.logger().info("Message processed", {
+        topic,
+        partition,
+        offset: message.offset,
+        timestamp: message.timestamp,
+        headers: Object.keys(message.headers).reduce(
+          (headers, key) => ({
+            ...headers,
+            [key]: message.headers[key].toString(),
+          }),
+          {}
+        ),
+        key: message.key.toString(),
+        value: message.value.toString(),
+        msgNumber,
+      });
     },
   });
-  return { statusCode: 200 };
 };
