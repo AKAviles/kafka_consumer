@@ -1,10 +1,12 @@
-const { Kafka, logLevel } = require("kafkajs");
+const { Kafka } = require("kafkajs");
 
+// This creates a client instance that is configured to connect to the Kafka broker provided by
+// the environment variable KAFKA_BOOTSTRAP_SERVER
 const kafka = new Kafka({
-  logLevel: logLevel.INFO,
   clientId: "output-topic",
   brokers: ["pkc-n98pk.us-west-2.aws.confluent.cloud:9092"],
   ssl: true,
+  logLevel: 2,
   sasl: {
     mechanism: "plain",
     username: "TVRLE5EIYD73XOGY",
@@ -13,35 +15,24 @@ const kafka = new Kafka({
   },
 });
 
-const consumer = kafka.consumer({ groupId: "output-consumption" });
+const consumer = kafka.consumer({ groupId: "test-output" });
 
-module.exports.handler = async (event) => {
-  console.log("inside handler");
+const run = async () => {
+  //Consuming
   await consumer.connect();
-  await consumer.subscribe({ topics: ["output-topic"] });
-  await consumer.stop();
+  await consumer.subscribe({ topic: "output-topic", fromBeginning: true });
+
   await consumer.run({
-    // eachBatch: async ({ batch }) => {
-    //   console.log(batch)
-    // },
     eachMessage: async ({ topic, partition, message }) => {
-      msgNumber++;
-      kafka.logger().info("Message processed", {
-        topic,
+      console.log({
         partition,
         offset: message.offset,
-        timestamp: message.timestamp,
-        headers: Object.keys(message.headers).reduce(
-          (headers, key) => ({
-            ...headers,
-            [key]: message.headers[key].toString(),
-          }),
-          {}
-        ),
-        key: message.key.toString(),
         value: message.value.toString(),
-        msgNumber,
       });
     },
   });
+};
+
+module.exports.handler = async (event) => {
+  run().catch(console.error);
 };
