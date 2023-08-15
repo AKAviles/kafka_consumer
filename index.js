@@ -1,9 +1,7 @@
 const { Kafka, logLevel } = require("kafkajs");
-const PrettyConsoleLogger = require("./prettyConsoleLogger");
 
 const kafka = new Kafka({
   logLevel: logLevel.INFO,
-  logCreator: PrettyConsoleLogger,
   clientId: "output-topic",
   brokers: ["pkc-n98pk.us-west-2.aws.confluent.cloud:9092"],
   ssl: true,
