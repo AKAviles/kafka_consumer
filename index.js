@@ -19,6 +19,7 @@ module.exports.handler = async (event) => {
   console.log("inside handler");
   await consumer.connect();
   await consumer.subscribe({ topics: ["output-topic"] });
+  await consumer.stop();
   await consumer.run({
     // eachBatch: async ({ batch }) => {
     //   console.log(batch)
