@@ -15,6 +15,7 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: "order-consumption" });
 
 module.exports.handler = async (event) => {
+  console.log("inside handler");
   await consumer.connect();
   await consumer.subscribe({ topics: ["orders"] });
   await consumer.run({
