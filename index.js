@@ -1,7 +1,7 @@
 const { Kafka } = require("kafkajs");
 
 const kafka = new Kafka({
-  clientId: "orders",
+  clientId: "output-topic",
   brokers: ["pkc-n98pk.us-west-2.aws.confluent.cloud:9092"],
   ssl: true,
   sasl: {
@@ -12,12 +12,12 @@ const kafka = new Kafka({
   },
 });
 
-const consumer = kafka.consumer({ groupId: "order-consumption" });
+const consumer = kafka.consumer({ groupId: "output-consumption" });
 
 module.exports.handler = async (event) => {
   console.log("inside handler");
   await consumer.connect();
-  await consumer.subscribe({ topics: ["orders"] });
+  await consumer.subscribe({ topics: ["output-topic"] });
   await consumer.run({
     // eachBatch: async ({ batch }) => {
     //   console.log(batch)
