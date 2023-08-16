@@ -1,10 +1,7 @@
 {
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.391.0",
-    "@aws-sdk/lib-dynamodb": "^3.391.0",
-    "aws-sdk": "^2.1437.0",
-    "bluebird": "^3.7.2",
-    "kafkajs": "^2.2.4"
+    "@aws-sdk/lib-dynamodb": "^3.391.0"
   },
   "type": "module"
 }
