@@ -12,12 +12,12 @@ const updateDynamoDb = async function (event) {
     event.records[key].map(async (record) => {
       const client = new DynamoDbClient({});
       const docClient = DynamoDBDocumentClient.from(client);
-      const params = {
+      const params = new PutCommand({
         Item: {
           message: Buffer.from(record.value, "base64").toString(),
         },
         TableName: "ordersTable",
-      };
+      });
       try {
         const data = await docClient.send(params);
         console.log(`Database successfully updated. Returned ${data}`);
