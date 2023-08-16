@@ -1,22 +1,18 @@
-const { config, DynamoDb } = require("aws-sdk");
+const AWS = require("aws-sdk");
 const Promise = require("bluebird");
 
 config.setPromisesDependency(Promise);
 
 const updateDynamoDb = async function (event) {
-  config.update({ region: "us-east-1" });
+  AWS.config.update({ region: "us-east-1" });
   let response = {
     statusCode: 200,
     body: JSON.stringify("Success"),
   };
 
-  console.log(config);
-
   for (let key in event.records) {
-    console.log("Key: ", key);
     // Iterate through records
     event.records[key].map(async (record) => {
-      console.log("Record: ", record);
       const payload = record.body;
       const params = {
         Item: {
@@ -24,11 +20,10 @@ const updateDynamoDb = async function (event) {
         },
         TableName: "ordersTable",
       };
-      console.log(params);
-      const documentClient = new DynamoDb.documentClient();
-      console.log("Document Client:" + JSON.stringify(documentClient));
+      const ddb = new AWS.DynamoDb();
+      console.log("Document Client:" + JSON.stringify(ddb));
       try {
-        const data = await documentClient.put(params).promise();
+        const data = ddb.putItem(params);
         console.log(`Database successfully updated. Returned ${data}`);
       } catch (err) {
         if (err) {
