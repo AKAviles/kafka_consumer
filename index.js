@@ -1,5 +1,5 @@
-import { config, DynamoDb } from "aws-sdk";
-import Promise from "bluebird";
+const { config, DynamoDb } = require("aws-sdk");
+const Promise = require("bluebird");
 
 config.setPromisesDependency(Promise);
 
