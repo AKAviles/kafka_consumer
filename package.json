@@ -3,6 +3,5 @@
     "@aws-sdk/client-dynamodb": "^3.391.0",
     "@aws-sdk/lib-dynamodb": "^3.391.0",
     "aws-sdk": "^2.2.0"
-  },
-  "type": "module"
+  }
 }
