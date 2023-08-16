@@ -26,7 +26,7 @@ const updateDynamoDb = async function (event) {
       };
       console.log(params);
       const documentClient = new DynamoDb.documentClient();
-      console.log(documentClient);
+      console.log("Document Client:" + JSON.stringify(documentClient));
       try {
         const data = await documentClient.put(params).promise();
         console.log(`Database successfully updated. Returned ${data}`);
