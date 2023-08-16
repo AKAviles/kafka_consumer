@@ -10,6 +10,8 @@ const updateDynamoDb = async function (event) {
     body: JSON.stringify("Success"),
   };
 
+  console.log(config);
+
   for (let key in event.records) {
     console.log("Key: ", key);
     // Iterate through records
@@ -24,6 +26,7 @@ const updateDynamoDb = async function (event) {
       };
       console.log(params);
       const documentClient = new DynamoDb.documentClient();
+      console.log(documentClient);
       try {
         const data = await documentClient.put(params).promise();
         console.log(`Database successfully updated. Returned ${data}`);
