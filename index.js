@@ -4,7 +4,7 @@ const Promise = require("bluebird");
 config.setPromisesDependency(Promise);
 
 const updateDynamoDb = async function (event) {
-  config.update({ region: us - east - 1 });
+  config.update({ region: "us-east-1" });
   let response = {
     statusCode: 200,
     body: JSON.stringify("Success"),
