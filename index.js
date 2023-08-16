@@ -20,7 +20,7 @@ const updateDynamoDb = async function (event) {
         Item: {
           message: Buffer.from(record.value, "base64").toString(),
         },
-        TableName: "figure it out",
+        TableName: "ordersTable",
       };
       console.log(params);
       const documentClient = new DynamoDb.documentClient();
