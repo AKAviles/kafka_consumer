@@ -17,5 +17,27 @@ functions:
             saslPlainAuth: arn:aws:secretsmanager:us-east-1:014920475271:secret:kafka/orders-M1JSqj
           bootstrapServers: pkc-n98pk.us-west-2.aws.confluent.cloud:9092
           topic: output-topic
-          batchSize: 1
+          batchSize: 100
           startingPosition: LATEST
+
+resources: # CloudFormation template syntax
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ordersTable
+        AttributeDefinitions:
+          - AttributeName: ordertime
+            AttributeType: N
+          - AttributeName: orderid
+            AttributeType: N
+          - AttributeName: itemid
+            AttributeType: S
+          - AttributeName: address
+            AttributeType: M
+        KeySchema:
+          - AttributeName: orderid
+            KeyType: N
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
