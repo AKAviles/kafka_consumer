@@ -5,6 +5,5 @@
     "aws-sdk": "^2.1437.0",
     "bluebird": "^3.7.2",
     "kafkajs": "^2.2.4"
-  },
-  "type": "module"
+  }
 }
