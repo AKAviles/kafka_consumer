@@ -1,5 +1,5 @@
-let { DynamoDbClient } = require("@aws-sdk/client-dynamodb");
-let { PutCommand, DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
+import { DynamoDbClient } from "@aws-sdk/client-dynamodb";
+import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 const updateDynamoDb = async function (event) {
   let response = {
