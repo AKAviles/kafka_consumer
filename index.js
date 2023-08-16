@@ -1,5 +1,4 @@
-import { DynamoDbClient } from "@aws-sdk/client-dynamodb";
-import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+let AWS = require("aws-sdk");
 
 const updateDynamoDb = async function (event) {
   let response = {
@@ -10,16 +9,15 @@ const updateDynamoDb = async function (event) {
   for (let key in event.records) {
     // Iterate through records
     event.records[key].map(async (record) => {
-      const client = new DynamoDbClient({});
-      const docClient = DynamoDBDocumentClient.from(client);
-      const params = new PutCommand({
+      const client = new AWS.DynamoDb.DocumentClient({ region: "us-east-1" });
+      const params = {
         Item: {
           message: Buffer.from(record.value, "base64").toString(),
         },
         TableName: "ordersTable",
-      });
+      };
       try {
-        const data = await docClient.send(params);
+        const data = await client.put(params).promise();
         console.log(`Database successfully updated. Returned ${data}`);
       } catch (err) {
         if (err) {
