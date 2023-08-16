@@ -22,7 +22,7 @@ functions:
 
 resources: # CloudFormation template syntax
   Resources:
-    usersTable:
+    ordersTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ordersTable
@@ -36,13 +36,9 @@ resources: # CloudFormation template syntax
           - AttributeName: address
             AttributeType: S
         KeySchema:
-          - AttributeName: ordertime
-            KeyType: RANGE
           - AttributeName: orderid
             KeyType: HASH
           - AttributeName: itemid
-            KeyType: RANGE
-          - AttributeName: address
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
