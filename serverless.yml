@@ -34,7 +34,7 @@ resources: # CloudFormation template syntax
           - AttributeName: itemid
             AttributeType: S
           - AttributeName: address
-            AttributeType: M
+            AttributeType: S
         KeySchema:
           - AttributeName: ordertime
             KeyType: RANGE
