@@ -1,10 +1,11 @@
-const { config, DynamoDB } = require("aws-sdk");
+const aws = require("aws-sdk");
 const Promise = require("bluebird");
 
-config.setPromisesDependency(Promise);
+aws.config.setPromisesDependency(Promise);
 
 const updateDynamoDb = async function (event) {
-  config.update({ region: "us-east-1" });
+  console.log("AWS WASSSSUP:" + JSON.stringify(aws));
+  aws.config.update({ region: "us-east-1" });
   let response = {
     statusCode: 200,
     body: JSON.stringify("Success"),
@@ -20,7 +21,7 @@ const updateDynamoDb = async function (event) {
         },
         TableName: "ordersTable",
       };
-      const ddb = new DynamoDb();
+      const ddb = new aws.DynamoDb();
       console.log("Document Client:" + JSON.stringify(ddb));
       try {
         const data = ddb.putItem(params);
