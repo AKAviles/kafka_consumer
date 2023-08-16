@@ -37,13 +37,13 @@ resources: # CloudFormation template syntax
             AttributeType: M
         KeySchema:
           - AttributeName: ordertime
-            AttributeType: N
+            KeyType: RANGE
           - AttributeName: orderid
-            AttributeType: N
+            KeyType: HASH
           - AttributeName: itemid
-            AttributeType: S
+            KeyType: RANGE
           - AttributeName: address
-            AttributeType: M
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
