@@ -27,13 +27,9 @@ resources: # CloudFormation template syntax
       Properties:
         TableName: ordersTable
         AttributeDefinitions:
-          - AttributeName: ordertime
-            AttributeType: N
           - AttributeName: orderid
             AttributeType: N
           - AttributeName: itemid
-            AttributeType: S
-          - AttributeName: address
             AttributeType: S
         KeySchema:
           - AttributeName: orderid
